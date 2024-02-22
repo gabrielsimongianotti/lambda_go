@@ -1,0 +1,48 @@
+
+service: lambdago
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: dev
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:PutItem
+          Resource:
+            - "arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/Product" 
+
+package:
+  patterns:
+    - '!./**'
+    - ./bin/**
+  
+  
+functions:
+  lambda_go:
+    handler: bin/lambda
+    events:
+      - httpApi:
+          path: /lambda
+          method: post
+
+resources:
+  Resources:
+    Product:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Product
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

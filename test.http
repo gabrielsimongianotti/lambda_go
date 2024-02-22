@@ -1,0 +1,7 @@
+POST https://gw0qwjci83.execute-api.us-east-1.amazonaws.com/lambda HTTP/1.1
+Content-type: application/json
+
+{
+    "name": "test",
+    "price": 100
+}

@@ -1,0 +1,7 @@
+{
+    "resource": "/",
+    "path": "/lambda",
+    "httpMethod": "POST",
+    "Content-type": "application/json",
+    "body": { "name": "test","price": 100}
+}
